@@ -15,7 +15,7 @@ namespace CretaceousApi.Controllers
       _db = db;
     }
 
-    // GET api/animals with search parameteres for species, name and age
+    // GET api/animals
     [HttpGet]
     public async Task<List<Animal>> Get(string species, string name, int minimumAge)
     {
@@ -39,7 +39,6 @@ namespace CretaceousApi.Controllers
       return await query.ToListAsync();
     }
 
-
     // GET: api/Animals/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Animal>> GetAnimal(int id)
@@ -56,14 +55,14 @@ namespace CretaceousApi.Controllers
 
     // POST api/animals
     [HttpPost]
-    public async Task<ActionResult<Animal>> Post(Animal animal)
+    public async Task<ActionResult<Animal>> Post([FromBody] Animal animal)
     {
       _db.Animals.Add(animal);
       await _db.SaveChangesAsync();
       return CreatedAtAction(nameof(GetAnimal), new { id = animal.AnimalId }, animal);
     }
 
-    // PUT: api/Animals/5
+        // PUT: api/Animals/5
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Animal animal)
     {

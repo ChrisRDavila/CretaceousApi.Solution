@@ -147,3 +147,5 @@ http://localhost:5000/api/animals/1
 ```
 
 Notice that the value of `animalId` needs to match the id number in the URL. In this example, they are both 1.
+
+<!-- include instructions for any further exploration once additional features added and updated ie pagination -->

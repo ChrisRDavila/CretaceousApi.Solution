@@ -17,6 +17,11 @@ builder.Services.AddDbContext<CretaceousApiContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+{
+    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -29,10 +34,13 @@ else
     app.UseHttpsRedirection();
 }
 
+app.UseCors("corspolicy");
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers()
+    .RequireCors("corspolicy");
 
 app.Run();

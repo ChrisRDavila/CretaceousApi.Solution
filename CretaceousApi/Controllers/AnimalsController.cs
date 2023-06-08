@@ -34,7 +34,7 @@ namespace CretaceousApi.Controllers
         Animals = animals,
         //page number inside the url
         CurrentPage = page,
-        //the amount of parks returned from the database
+        //the amount of animals returned from the database
         Pages = pageCount,
         //amnt of items on the page
         PageSize = pageSize

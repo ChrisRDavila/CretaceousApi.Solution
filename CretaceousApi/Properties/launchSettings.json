@@ -19,7 +19,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ParksApi-Production": {
+    "AnimalsApi-Production": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,

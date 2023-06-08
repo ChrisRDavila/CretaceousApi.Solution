@@ -17,10 +17,10 @@ builder.Services.AddDbContext<CretaceousApiContext>(
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
-{
-    build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+// builder.Services.AddCors(p => p.AddPolicy("corspolicy", build =>
+// {
+//     build.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+// }));
 
 var app = builder.Build();
 
@@ -34,13 +34,13 @@ else
     app.UseHttpsRedirection();
 }
 
-app.UseCors("corspolicy");
+// app.UseCors("corspolicy");
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers()
-    .RequireCors("corspolicy");
+app.MapControllers();
+    // .RequireCors("corspolicy");
 
 app.Run();

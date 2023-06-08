@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CretaceousApi.Models;
+using System;
 
 namespace CretaceousApi.Controllers
 {
@@ -13,6 +14,32 @@ namespace CretaceousApi.Controllers
     public AnimalsController(CretaceousApiContext db)
     {
       _db = db;
+    }
+
+    [HttpGet("page/{page}")]
+    public async Task<ActionResult<List<Animal>>> GetPages(int page, int pageSize = 4)
+    {
+        if (_db.Animals == null)
+        return NotFound();
+
+      int pageCount = _db.Animals.Count();
+
+      var animals = await _db.Animals
+        .Skip((page - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+        var response = new Response
+      {
+        Animals = animals,
+        //page number inside the url
+        CurrentPage = page,
+        //the amount of parks returned from the database
+        Pages = pageCount,
+        //amnt of items on the page
+        PageSize = pageSize
+      };
+      return Ok(response);
     }
 
     // GET api/animals
@@ -111,6 +138,27 @@ namespace CretaceousApi.Controllers
       await _db.SaveChangesAsync();
 
       return NoContent();
+    }
+
+    [HttpGet("random")]
+    public async Task<ActionResult<Animal>> RandomAnimal()
+    {
+      int animals = await _db.Animals.CountAsync();
+      
+      if (animals == 0)
+        {
+          return NotFound();
+        }
+
+      var random = new Random();
+      int randomInt = random.Next(0, animals);
+
+      Animal randomAnimal = await _db.Animals
+        .OrderBy(animal => animal.AnimalId)
+        .Skip(randomInt)
+        .FirstOrDefaultAsync();
+
+      return Ok(randomAnimal);
     }
   }
 }

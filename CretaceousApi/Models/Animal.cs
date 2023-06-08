@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using CretaceousApi.Models;
+using System.Collections.Generic;
 
 namespace CretaceousApi.Models
 {
